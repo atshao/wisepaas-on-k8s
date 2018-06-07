@@ -1,0 +1,93 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmm
+  namespace: wise-paas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      belong: rmm
+  template:
+    metadata:
+      labels:
+        belong: rmm
+    spec:
+      containers:
+      - name: worker-common
+        image: atshao/rmm-worker-common
+        env:
+        - name: RABBITMQ_ERLANG_COOKIE
+          value: YxARaTyDYLPVcty4YDG4mw==
+      - name: worker-rmm
+        image: atshao/rmm-worker-rmm
+      - name: worker-ota
+        image: atshao/rmm-worker-ota
+      - name: portal
+        image: atshao/rmm-portal
+        ports:
+        - containerPort: 8080
+      - name: postgres
+        image: postgres:9.6.9-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: admin
+      - name: mongo
+        image: mongo:3.4.15-jessie
+        ports:
+        - containerPort: 27017
+      - name: rabbitmq
+        image: atshao/rabbitmq
+        ports:
+        - containerPort: 1883
+        - containerPort: 15672
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: admin
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "05155853"
+        - name: RABBITMQ_ERLANG_COOKIE
+          value: YxARaTyDYLPVcty4YDG4mw==
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmm-services
+  namespace: wise-paas
+spec:
+  type: NodePort
+  selector:
+    belong: rmm
+  ports:
+  - name: rmm-portal
+    port: 8080
+    nodePort: 30333
+    targetPort: 8080
+    protocol: TCP
+  - name: postgresql
+    port: 5432
+    nodePort: 30444
+    targetPort: 5432
+    protocol: TCP
+  - name: rqbbitmq
+    port: 1883
+    nodePort: 30555
+    targetPort: 1883
+    protocol: TCP
+  - name: rabbitmq-portal
+    port: 15672
+    nodePort: 30672
+    targetPort: 15672
+    protocol: TCP
+  - name: mongodb
+    port: 27017
+    nodePort: 30666
+    targetPort: 27017
+    protocol: TCP
+
