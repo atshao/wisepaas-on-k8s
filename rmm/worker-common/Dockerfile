@@ -10,6 +10,7 @@ RUN set -eux \
 COPY worker.jar /rmm/
 COPY init-psql.sql /rmm/
 COPY init-mongo.js /rmm/
+COPY Server_Config.xml /rmm/
 COPY docker-entrypoint.sh /rmm/
 
 WORKDIR /rmm

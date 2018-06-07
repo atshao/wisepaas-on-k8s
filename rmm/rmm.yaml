@@ -14,12 +14,20 @@ spec:
       labels:
         belong: rmm
     spec:
+      volumes:
+      - name: rmm-event
+        emptyDir: {}
       containers:
       - name: worker-common
         image: atshao/rmm-worker-common
+        volumeMounts:
+        - mountPath: /rmm/event
+          name: rmm-event
         env:
         - name: RABBITMQ_ERLANG_COOKIE
           value: YxARaTyDYLPVcty4YDG4mw==
+        - name: EVENT_COMMON_READY
+          value: common.ready
       - name: worker-rmm
         image: atshao/rmm-worker-rmm
       - name: worker-ota
@@ -28,6 +36,12 @@ spec:
         image: atshao/rmm-portal
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - mountPath: /rmm/event
+          name: rmm-event
+        env:
+        - name: EVENT_COMMON_READY
+          value: common.ready
       - name: postgres
         image: postgres:9.6.9-alpine
         ports:

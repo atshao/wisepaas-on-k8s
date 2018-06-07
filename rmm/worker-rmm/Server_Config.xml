@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <WebServer>
+    <IP>127.0.0.1</IP>
+    <HTTPPort>8080</HTTPPort>
+  </WebServer>
+  <BrokerServer>
+    <Receive>
+      <Type>AMQP</Type>
+      <IP>127.0.0.1</IP>
+      <Port>5672</Port>
+      <Account>admin</Account>
+      <Password>ATyD6aUu1l9Yz+gNYJtefA==</Password>
+      <Vhost>/</Vhost>
+      <Tenant>+</Tenant>
+      <SSLEnable>false</SSLEnable>
+    </Receive>
+    <Send>
+      <Type>AMQP</Type>
+      <IP>127.0.0.1</IP>
+      <Port>5672</Port>
+      <Account>admin</Account>
+      <Password>ATyD6aUu1l9Yz+gNYJtefA==</Password>
+      <Vhost>/</Vhost>
+      <Tenant>WISE-PaaS</Tenant>
+      <SSLEnable>false</SSLEnable>
+    </Send>
+  </BrokerServer>
+  <DBServer>
+    <SQL>
+      <PostgreSQL>
+        <Properties>
+          <property name="eclipselink.cache.size.default" value="0"/>
+          <property name="eclipselink.logging.level" value="OFF"/>
+          <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/wisepaas?currentSchema=rmm"/>
+          <property name="javax.persistence.jdbc.user" value="rmm"/>
+          <property name="eclipselink.cache.shared.default" value="false"/>
+          <property name="javax.persistence.jdbc.password" value="5msIhSQ5Ggq7alAAtFcPiQ=="/>
+          <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+          <property name="eclipselink.cache.type.default" value="NONE"/>
+          <property name="eclipselink.jdbc.cache-statements" value="true"/>
+        </Properties>
+      </PostgreSQL>
+    </SQL>
+    <NoSQL>
+      <MongoDB>
+        <IP>127.0.0.1</IP>
+        <Port>27017</Port>
+        <username>wisepaas</username>
+        <Password>WYOayctZri8m3Af8f7N7hQ==</Password>
+        <DBName>WISE-PaaS</DBName>
+      </MongoDB>
+    </NoSQL>
+  </DBServer>
+  <Log4j>
+    <Properties>
+      <property name="log4j.appender.FILE.MaxBackupIndex" value="100"/>
+      <property name="log4j.rootLogger" value="debug, MongoDB"/>
+      <property name="log4j.appender.STDOUT.layout.ConversionPattern" value="[%d{yyyy-MM-dd hh:mm:ss}][%p][%l]%n%m%n"/>
+      <property name="log4j.appender.FILE.layout" value="org.apache.log4j.PatternLayout"/>
+      <property name="log4j.appender.STDOUT.layout" value="org.apache.log4j.PatternLayout"/>
+      <property name="log4j.appender.DB.sql" value="INSERT INTO rmm.log (level, message, thread, location, class, ts) VALUES ('%p', '%m', '%t', '%l',  '%c', '%d{ yyyy-MM-dd HH:mm:ss.SSS}')"/>
+      <property name="log4j.appender.FILE" value="org.apache.log4j.RollingFileAppender"/>
+      <property name="log4j.logger.DB" value="debug, DB"/>
+      <property name="log4j.appender.STDOUT" value="org.apache.log4j.ConsoleAppender"/>
+      <property name="log4j.appender.FILE.layout.ConversionPattern" value="[%d{yyyy-MM-dd hh:mm:ss}][%p][%l]%n%m%n"/>
+      <property name="log4j.logger.FILE" value="debug, FILE"/>
+      <property name="log4j.appender.DB.layout" value="org.apache.log4j.PatternLayout"/>
+      <property name="log4j.appender.FILE.MaxFileSize" value="20971520"/>
+      <property name="log4j.appender.DB" value="org.apache.log4j.jdbc.JDBCAppender"/>
+      <property name="log4j.logger.STDOUT" value="debug, STDOUT"/>
+      <property name="log4j.appender.MongoDB" value="org.log4mongo.MongoDbAppender"/>
+      <property name="log4j.appender.FILE.File" value="D:\TortoiseGit\RMM-EI-Server\log\server.log"/>
+    </Properties>
+  </Log4j>
+</Configuration>
+
