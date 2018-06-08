@@ -16,9 +16,9 @@
       <SSLEnable>false</SSLEnable>
     </Receive>
     <Send>
-      <Type>AMQP</Type>
+      <Type>MQTT</Type>
       <IP>127.0.0.1</IP>
-      <Port>5672</Port>
+      <Port>1883</Port>
       <Account>admin</Account>
       <Password>ATyD6aUu1l9Yz+gNYJtefA==</Password>
       <Vhost>/</Vhost>
