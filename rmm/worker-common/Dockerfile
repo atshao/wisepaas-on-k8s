@@ -17,6 +17,7 @@ WORKDIR /rmm
 RUN chmod +x /rmm/docker-entrypoint.sh
 
 
+ENV PGPASSWORD admin
 ENTRYPOINT ["/rmm/docker-entrypoint.sh"]
 CMD ["java", "-jar", "worker.jar"]
 

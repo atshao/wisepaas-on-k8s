@@ -7,7 +7,7 @@
   <BrokerServer>
     <Receive>
       <Type>AMQP</Type>
-      <IP>127.0.0.1</IP>
+      <IP>rmm-rmq-service</IP>
       <Port>5672</Port>
       <Account>admin</Account>
       <Password>ATyD6aUu1l9Yz+gNYJtefA==</Password>
@@ -17,7 +17,7 @@
     </Receive>
     <Send>
       <Type>MQTT</Type>
-      <IP>127.0.0.1</IP>
+      <IP>rmm-rmq-service</IP>
       <Port>1883</Port>
       <Account>admin</Account>
       <Password>ATyD6aUu1l9Yz+gNYJtefA==</Password>
@@ -32,7 +32,7 @@
         <Properties>
           <property name="eclipselink.cache.size.default" value="0"/>
           <property name="eclipselink.logging.level" value="OFF"/>
-          <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/wisepaas?currentSchema=rmm"/>
+          <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://rmm-psql-service:5432/wisepaas?currentSchema=rmm"/>
           <property name="javax.persistence.jdbc.user" value="rmm"/>
           <property name="eclipselink.cache.shared.default" value="false"/>
           <property name="javax.persistence.jdbc.password" value="5msIhSQ5Ggq7alAAtFcPiQ=="/>
@@ -44,7 +44,7 @@
     </SQL>
     <NoSQL>
       <MongoDB>
-        <IP>127.0.0.1</IP>
+        <IP>rmm-mongo-service</IP>
         <Port>27017</Port>
         <username>wisepaas</username>
         <Password>WYOayctZri8m3Af8f7N7hQ==</Password>

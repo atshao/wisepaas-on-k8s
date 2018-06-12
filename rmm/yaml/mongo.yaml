@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmm-mongo
+  namespace: wise-paas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      belong: rmm-mongo
+  template:
+    metadata:
+      labels:
+        belong: rmm-mongo
+    spec:
+      containers:
+      - name: rmm-mongo
+        image: mongo:3.4.15-jessie
+        ports:
+        - containerPort: 27017
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmm-mongo-service
+  namespace: wise-paas
+spec:
+  type: NodePort
+  selector:
+    belong: rmm-mongo
+  ports:
+  - name: mongodb
+    port: 27017
+    nodePort: 30666
+    targetPort: 27017
+    protocol: TCP
+

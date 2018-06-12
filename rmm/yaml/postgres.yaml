@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmm-postgres
+  namespace: wise-paas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      belong: rmm-postgres
+  template:
+    metadata:
+      labels:
+        belong: rmm-postgres
+    spec:
+      containers:
+      - name: rmm-postgres
+        image: postgres:9.6.9-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: admin
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmm-psql-service
+  namespace: wise-paas
+spec:
+  type: NodePort
+  selector:
+    belong: rmm-postgres
+  ports:
+  - name: rmm-postgres
+    port: 5432
+    nodePort: 30444
+    targetPort: 5432
+    protocol: TCP
+

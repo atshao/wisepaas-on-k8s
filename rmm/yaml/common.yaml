@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmm-worker-common
+  namespace: wise-paas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      belong: rmm-worker-common
+  template:
+    metadata:
+      labels:
+        belong: rmm-worker-common
+    spec:
+      containers:
+      - name: worker-common
+        image: ecgwc/rmm-worker-common
+      initContainers:
+      - name: init-psql
+        image: postgres:9.6.9-alpine
+        command:
+        - sh
+        - -c
+        - |
+          echo "Waiting PostgreSQL...";
+          until pg_isready -h rmm-psql-service -q; do
+            sleep 2
+          done
+      - name: init-mongo
+        image: mongo:3.4.15-jessie
+        command:
+        - sh
+        - -c
+        - |
+          echo "Waiting MongoDB..."
+          until mongo --host rmm-mongo-service --eval "db.getCollectionNames()"; do
+            sleep 2
+          done
+

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmm-worker-ota
+  namespace: wise-paas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      belong: rmm-worker-ota
+  template:
+    metadata:
+      labels:
+        belong: rmm-worker-ota
+    spec:
+      containers:
+      - name: worker-ota
+        image: ecgwc/rmm-worker-ota
+      initContainers:
+      - name: init-psql-common
+        image: postgres:9.6.9-alpine
+        env:
+        - name: PGPASSWORD
+          value: common
+        command:
+        - sh
+        - -c
+        - |
+          echo "Waiting CommonWorker's PostgreSQL..."
+          until psql -c 'select * from public.device' -h rmm-psql-service -U common wisepaas; do
+            sleep 2
+          done
+
